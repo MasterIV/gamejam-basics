@@ -28,6 +28,10 @@ function Rect( p1, p2 ) {
 	this.p2 = p2;
 }
 
+Rect.create = function(x1,y1,x2,y2) {
+	return new Rect( new V2( x1, y1 ), new V2( x2, y2 ));
+}
+
 Rect.prototype.collision = function( r ) {
 	return this.p1.x < r.p2.x
 			&& this.p2.x > r.p1.x
@@ -47,6 +51,14 @@ Rect.prototype.moved = function( v ) {
 		this.p1.sum( v ),
 		this.p2.sum( v )
 	);
+}
+
+Rect.prototype.width = function() {
+	return this.p2.x - this.p1.x;
+}
+
+Rect.prototype.height = function() {
+	return this.p2.y - this.p1.y;
 }
 
 Rect.prototype.move = function( v ) {
