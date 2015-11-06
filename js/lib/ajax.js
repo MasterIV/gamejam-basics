@@ -1,6 +1,6 @@
 var ajax = {
 	load: function( url, callback ) {
-		var xmlHttp = null
+		var xmlHttp = null;
 
 		try {
 			xmlHttp = new XMLHttpRequest();
@@ -34,5 +34,6 @@ var ajax = {
 			callback( eval( '('+data+')' ));
 		});
 	}
-}
+};
+
 

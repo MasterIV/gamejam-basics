@@ -36,4 +36,4 @@ var controls = {
 		evt = (evt) ? evt : ((event) ? event : null);
 		return this.translate( 'up', evt.keyCode );
 	}
-}
+};

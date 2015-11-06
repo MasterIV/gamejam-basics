@@ -1,4 +1,4 @@
-var sound = {
+var s = {
 	sampels: [],
 
 	play: function( file ) {
@@ -18,4 +18,4 @@ var sound = {
 			return sound;
 		}
 	}
-}
+};

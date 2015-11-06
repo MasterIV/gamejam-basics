@@ -24,4 +24,4 @@ var g = {
 
 		if( total == 0 ) callback();
 	}
-}
+};

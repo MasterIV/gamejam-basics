@@ -71,4 +71,4 @@ var game = {
 		this.displayCtx.font = '10px monospace';
 		this.displayCtx.fillText( this.fps, 600, 460 );
 	}
-}
+};
