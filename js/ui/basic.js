@@ -10,20 +10,34 @@ function ImageEntity(pos, src, scale) {
 ImageEntity.prototype = new Entity();
 
 ImageEntity.prototype.onDraw = function(ctx) {
-	ctx.drawImage(this.img, 0, 0, this.size.w, this.size.h, this.position.x, this.position.y, this.size.w*this.scale, this.size.h*this.scale);
+	ctx.drawImage(this.img, 0, 0, this.size.x, this.size.y, 0, 0, this.size.x*this.scale, this.size.y*this.scale);
 };
 
 function RectEntity(pos, size, color) {
 	Entity.call(this);
 	this.position = pos;
 	this.size = size;
-	this.color = color;
+	this.color = color || colors.default;
 }
 
 RectEntity.prototype = new Entity();
 
 RectEntity.prototype.onDraw = function(ctx) {
 	this.color.apply(ctx, this.hover());
-	ctx.fillRect(this.position.x, this.position.y, this.size.w, this.size.h);
-	ctx.strokeRect(this.position.x, this.position.y, this.size.w, this.size.h);
+	ctx.fillRect(0, 0, this.size.x, this.size.y);
+	ctx.strokeRect(0, 0, this.size.x, this.size.y);
+};
+
+function TextEntity(pos, text, font) {
+	Entity.call(this);
+	this.position = pos;
+	this.text = text;
+	this.font = font || fonts.default;
+}
+
+TextEntity.prototype = new Entity();
+
+TextEntity.prototype.onDraw = function(ctx) {
+	this.font.apply(ctx, this.hover());
+	ctx.fillText(this.text, 0, 0);
 };

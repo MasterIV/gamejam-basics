@@ -3,7 +3,12 @@ var config = {
 };
 
 var colors = {
-	button: new Colors()
+	default: new Colors('#000', '#FFF', '#555', '#DDD')
+};
+
+var fonts = {
+	default: new FontStyle(40, '#000', 'sans-serif', '#555' ),
+	frames: new FontStyle(12, '#000', 'monospace' )
 };
 
 var scenes = {

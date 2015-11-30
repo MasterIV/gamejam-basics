@@ -1,3 +1,5 @@
+/** TODO replace this deprecated stuff **/
+
 function Sprite(img ) {
 	this.img = g[img];
 	this.width = this.img.width;
@@ -37,7 +39,7 @@ function Framecounter(duration ) {
 	this.frame = 0;
 }
 
-Framecounter.prototype.update = function(delta ) {
+Framecounter.prototype.update = function( delta ) {
 	this.anitime += delta;
 	this.frame = Math.floor( this.anitime / this.duration );
 };

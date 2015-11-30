@@ -27,8 +27,8 @@ var game = {
 
 		this.scale = Math.min(fw, fh);
 
-		this.display.width = this.width*this.scale;
-		this.display.height = this.height*this.scale;
+		this.display.width = screen.w*this.scale;
+		this.display.height = screen.h*this.scale;
 	},
 
 	init: function(scene) {
@@ -84,12 +84,11 @@ var game = {
 		this.scene.draw( this.bufferCtx );
 
 		this.display.width = this.display.width;
-		this.displayCtx.drawImage( this.buffer, 0, 0 );
+		this.displayCtx.drawImage( this.buffer, 0, 0, screen.w*this.scale, screen.h*this.scale );
 
 		if( config.debug ) {
-			this.displayCtx.fillStyle = 'white';
-			this.displayCtx.font = '10px monospace';
-			this.displayCtx.fillText(this.fps, 5, 5);
+			fonts.frames.apply(this.displayCtx);
+			this.displayCtx.fillText(this.fps, 15, 15);
 		}
 	}
 };
