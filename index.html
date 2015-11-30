@@ -5,29 +5,54 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 
+		<script type="text/javascript" src="js/lib/config.js"></script>
+		<script type="text/javascript" src="js/lib/vector.js"></script>
+
 		<script type="text/javascript" src="data/config.js"></script>
 
-		<script type="text/javascript" src="js/lib/vector.js"></script>
 		<script type="text/javascript" src="js/lib/game.js"></script>
 		<script type="text/javascript" src="js/lib/controls.js"></script>
 		<script type="text/javascript" src="js/lib/mouse.js"></script>
 		<script type="text/javascript" src="js/lib/sound.js"></script>
 		<script type="text/javascript" src="js/lib/graphic.js"></script>
+
 		<script type="text/javascript" src="js/lib/sprite.js"></script>
+		<script type="text/javascript" src="js/lib/entity.js"></script>
 		<script type="text/javascript" src="js/lib/scene.js"></script>
 		<script type="text/javascript" src="js/lib/util.js"></script>
 		<script type="text/javascript" src="js/lib/ajax.js"></script>
+
+		<script type="text/javascript" src="js/ui/basic.js"></script>
 		<script type="text/javascript" src="js/ui/buttons.js"></script>
+
+		<script type="text/javascript" src="js/scenes/menu.js"></script>
+		<script type="text/javascript" src="js/scenes/credits.js"></script>
+		<script type="text/javascript" src="js/scenes/play.js"></script>
+		<script type="text/javascript" src="js/scenes/help.js"></script>
 
 		<script type="text/javascript">
 			function init() {
-				controls.init();
-				game.init();
+				graphics.load(function() {
+					document.getElementById('loading').style.display = 'none';
+
+					scenes.init();
+					controls.init();
+					mouse.init();
+					sound.load();
+
+					game.init(scenes.default);
+				});
 			}
 		</script>
 	</head>
 
 	<body onload="init();">
-		<canvas id="gameframe" width="640" height="480"></canvas>
+		<div id="loading">
+			<p>Loading...</p>
+			<p><img src="img/loading.gif" alt="loading"></p>
+			<p>Powered by Enginename</p>
+		</div>
+
+		<canvas id="gameframe"></canvas>
 	</body>
 </html>

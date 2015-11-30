@@ -18,9 +18,11 @@ V2.prototype.div = function( s ) { this.x /= s; this.y /= s; return this; };
 V2.prototype.angle = function( v ) { return Math.atan2( v.y-this.y, v.x-this.x ); };
 V2.prototype.dist = function( v ) { return Math.sqrt( Math.pow( v.x-this.x, 2 ) + Math.pow( v.y - this.y, 2)); };
 
-V2.prototype.grid = function( w, h ) { this.x = Math.floor( this.x / w ); this.y = Math.floor( this.y / h ); 	};
+V2.prototype.grid = function( w, h ) { this.x = Math.floor( this.x / w ); this.y = Math.floor( this.y / h ); };
 V2.prototype.invert = function() { this.x *= -1; this.y *= -1;};
 
+V2.prototype.clone = function() { return new V2( this.x, this.y ); };
+V2.prototype.equal = function( v ) { return v.x == this.x && v.y == this.y };
 
 
 function Rect( p1, p2 ) {
@@ -76,26 +78,8 @@ Rect.prototype.inside = function( v ) {
 			&& this.p2.x > v.x
 			&& this.p1.y < v.y
 			&& this.p2.y > v.y;
-}
+};
 
-function limit( v, m ) {
-	return Math.min( m, Math.max( -m, v ));
-}
-
-function deg_to_vector( angle, length ) {
-	return rad_to_vector( angle * ( Math.PI / 180 ), length );
-}
-
-function rad_to_vector( angle, length ) {
-		var x = Math.round( Math.sin( angle ) * length );
-		var y = -Math.round( Math.cos( angle ) * length );
-		return new V2( x, y );
-}
-
-function rad_to_deg( rad ) {
-		return rad * ( 180 / Math.PI );
-}
-
-function arrayRemove( arr, element ) {
-	arr.splice( arr.indexOf( element ), 1 );
+function Zero() {
+	return new V2(0,0);
 }

@@ -1,14 +1,12 @@
 function Scene() {
-	this.position = new V2(0, 0);
-	this.size = new V2(0, 0);
-	this.entities = [];
-
-	var oldDraw = this.draw;
-	this.draw = function(ctx ) {
-		if( this.bg )
-			this.bg.draw( ctx, 0 ,0 );
-		oldDraw( ctx );
-	};
+	Entity.call(this);
+	this.size.x = screen.w;
+	this.size.y = screen.h;
 }
 
 Scene.prototype = new Entity();
+
+Scene.prototype.onDraw = function(ctx) {
+	if( this.bg )
+		this.bg.draw( ctx, 0 ,0 );
+};

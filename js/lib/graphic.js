@@ -1,4 +1,4 @@
-var g = {
+var graphics = {
 	urls: [],
 
 	add: function( url ) {

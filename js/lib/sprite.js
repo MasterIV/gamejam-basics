@@ -30,3 +30,14 @@ AnimationSprite.prototype.draw = function(ctx, x, y, f ) {
 AnimationSprite.prototype.center = function(ctx, x, y, f ) {
 	ctx.drawImage( this.img, f*this.w, 0, this.w, this.h, x-this.w/2, y-this.h/2, this.w, this.h );
 };
+
+function Framecounter(duration ) {
+	this.duration = duration;
+	this.anitime = 0;
+	this.frame = 0;
+}
+
+Framecounter.prototype.update = function(delta ) {
+	this.anitime += delta;
+	this.frame = Math.floor( this.anitime / this.duration );
+};
