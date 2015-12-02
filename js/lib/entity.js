@@ -83,10 +83,6 @@ Entity.prototype.mousedown = function(pos) {
 	pos = pos.dif(this.position);
 	if (this.onMouseDown) this.onMouseDown(pos);
 
-	for (var i = 0; i < this.entities.length; i++)
-		if (this.entities[i].mousedown)
-			this.entities[i].mousedown(pos);
-
 	if( this.blocking.length ) {
 		this.dispatch(this.blocking, 'mousedown', pos );
 	} else {
