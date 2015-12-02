@@ -2,6 +2,7 @@ function Entity() {
 	this.position = new V2(0, 0);
 	this.size = new V2(0, 0);
 	this.entities = [];
+	this.hidden = [];
 	this.blocking = [];
 }
 
@@ -49,6 +50,18 @@ Entity.prototype.update = function(delta) {
 Entity.prototype.getArea = function() {
 	if(this.size.x == 0 && this.size.y == 0) this.inheritSize();
 	return new Rect(this.position, this.position.sum(this.size));
+};
+
+Entity.prototype.hideEntities = function() {
+	if (!this.entities.length) return;
+	this.hidden = this.entities;
+	this.entities = [];
+};
+
+Entity.prototype.showEntities = function() {
+	if (!this.hidden.length) return;
+	this.entities = this.hidden;
+	this.hidden = [];
 };
 
 Entity.prototype.hover = function() {
