@@ -20,9 +20,11 @@ V2.prototype.dist = function( v ) { return Math.sqrt( Math.pow( v.x-this.x, 2 ) 
 
 V2.prototype.grid = function( w, h ) { this.x = Math.floor( this.x / w ); this.y = Math.floor( this.y / h ); };
 V2.prototype.invert = function() { this.x *= -1; this.y *= -1;};
+V2.prototype.inverse = function() { return new V2( this.x * -1, this.y * -1 );};
 
 V2.prototype.clone = function() { return new V2( this.x, this.y ); };
 V2.prototype.equal = function( v ) { return v.x == this.x && v.y == this.y };
+V2.prototype.abs = function() { return new V2( Math.abs(this.x), Math.abs(this.y)); };
 
 
 function Rect( p1, p2 ) {

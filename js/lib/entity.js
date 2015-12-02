@@ -36,6 +36,9 @@ Entity.prototype.dispatch = function(list, event, argurment) {
 };
 
 Entity.prototype.update = function(delta) {
+	if (this.onUpdate)
+		this.onUpdate(delta);
+
 	if( this.blocking.length ) {
 		this.dispatch(this.blocking, 'update', delta );
 	} else {
