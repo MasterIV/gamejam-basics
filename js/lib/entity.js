@@ -29,6 +29,18 @@ Entity.prototype.setPosition = function(x, y) {
 	this.position.y = y;
 };
 
+Entity.prototype.add = function(entity) {
+	this.entities.push(entity);
+};
+
+Entity.prototype.block = function(entity) {
+	this.blocking.push(entity);
+};
+
+Entity.prototype.remove = function(entity) {
+	arrayRemove(this.entities, entity);
+};
+
 Entity.prototype.dispatch = function(list, event, argurment) {
 	for (var i = 0; i < list.length; i++)
 		if (list[i][event])
@@ -57,7 +69,7 @@ Entity.prototype.hover = function() {
 
 Entity.prototype.draw = function(ctx) {
 	ctx.save();
-	ctx.translate(this.position.x, this.position.y);
+	ctx.translate(this.position.x|0, this.position.y|0);
 
 	if (this.onDraw) this.onDraw(ctx);
 	this.dispatch(this.entities, 'draw', ctx );
@@ -82,10 +94,6 @@ Entity.prototype.mousedown = function(pos) {
 	if (!this.getArea().inside(pos)) return;
 	pos = pos.dif(this.position);
 	if (this.onMouseDown) this.onMouseDown(pos);
-
-	for (var i = 0; i < this.entities.length; i++)
-		if (this.entities[i].mousedown)
-			this.entities[i].mousedown(pos);
 
 	if( this.blocking.length ) {
 		this.dispatch(this.blocking, 'mousedown', pos );

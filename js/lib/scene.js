@@ -16,7 +16,7 @@ Scene.prototype.onDraw = function(ctx) {
 
 Scene.prototype.center = function(obj) {
 	obj.position.x = this.size.x / 2 - obj.size.x / 2;
-	this.entities.push(obj);
+	this.add(obj);
 };
 
 Scene.prototype.up = function(key) {

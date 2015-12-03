@@ -34,7 +34,9 @@ ViewPort.prototype.scrollTo = function(pos) {
 
 };
 
-ViewPort.prototype.onUpdate = function() {
+ViewPort.prototype.update = function(delta) {
+	Entity.prototype.update.call(this, delta);
+
 	if( this.subject ) {
 		this.position.x = Math.max(Math.min(0, this.visible.x/2-this.subject.position.x), this.visible.x-this.size.x );
 		this.position.y = Math.max(Math.min(0, this.visible.y/2-this.subject.position.y), this.visible.y-this.size.y );

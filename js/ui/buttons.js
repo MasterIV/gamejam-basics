@@ -20,7 +20,7 @@ Button.prototype.text = function(text, font, w, h) {
 	txt.hover = function() { return self.hover(); };
 	this.setText = function(s) { txt.text = s };
 
-	this.entities.push(txt);
+	this.add(txt);
 	return this;
 };
 
@@ -28,7 +28,7 @@ Button.prototype.img = function(src, scale) {
 	var img = new ImageEntity(Zero(), src, scale);
 	this.size.x = Math.max(img.size.x, this.size.x);
 	this.size.y = Math.max(img.size.y, this.size.y);
-	this.entities.push(img);
+	this.add(img);
 	return this;
 };
 
@@ -40,6 +40,6 @@ Button.prototype.rect = function(w, h, color) {
 
 	this.size.x = Math.max(w, this.size.x);
 	this.size.y = Math.max(h, this.size.y);
-	this.entities.push(rect);
+	this.add(rect);
 	return this;
 };

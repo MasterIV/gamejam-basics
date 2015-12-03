@@ -1,7 +1,7 @@
 function Player(pos) {
 	Entity.call(this);
 	this.position = pos;
-	this.entities.push(new RectEntity(Zero(), new V2(40, 80), colors.player));
+	this.add(new RectEntity(Zero(), new V2(40, 80), colors.player));
 	this.velocity = new V2(0,0);
 	this.speed = 100;
 }

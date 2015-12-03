@@ -10,7 +10,7 @@ function ImageEntity(pos, src, scale) {
 ImageEntity.prototype = new Entity();
 
 ImageEntity.prototype.onDraw = function(ctx) {
-	ctx.drawImage(this.img, 0, 0, this.size.x, this.size.y, 0, 0, this.size.x*this.scale, this.size.y*this.scale);
+	ctx.drawImage(this.img, 0, 0, this.size.x|0, this.size.y|0, 0, 0, (this.size.x*this.scale)|0, (this.size.y*this.scale)|0);
 };
 
 function RectEntity(pos, size, color) {
@@ -24,8 +24,8 @@ RectEntity.prototype = new Entity();
 
 RectEntity.prototype.onDraw = function(ctx) {
 	this.color.apply(ctx, this.hover());
-	ctx.fillRect(0, 0, this.size.x, this.size.y);
-	ctx.strokeRect(0, 0, this.size.x, this.size.y);
+	ctx.fillRect(0, 0, this.size.x|0, this.size.y|0);
+	ctx.strokeRect(0, 0, this.size.x|0, this.size.y|0);
 };
 
 function TextEntity(pos, text, font) {
