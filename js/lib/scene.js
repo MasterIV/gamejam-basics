@@ -1,7 +1,5 @@
 function Scene() {
-	Entity.call(this);
-	this.size.x = screen.w;
-	this.size.y = screen.h;
+	Entity.call(this, Zero(), new V2(screen.w, screen.h));
 	this.keyAware = [];
 }
 

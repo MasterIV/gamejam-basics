@@ -1,6 +1,6 @@
-function Entity() {
-	this.position = new V2(0, 0);
-	this.size = new V2(0, 0);
+function Entity(pos, size) {
+	this.position = pos || Zero();
+	this.size = size || Zero();
 	this.entities = [];
 	this.blocking = [];
 }

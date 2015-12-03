@@ -1,6 +1,5 @@
 function Button(pos, callback) {
-	Entity.call(this);
-	this.position = pos;
+	Entity.call(this, pos);
 	this.onClick = callback;
 }
 

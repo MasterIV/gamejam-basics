@@ -34,6 +34,10 @@ ViewPort.prototype.scrollTo = function(pos) {
 
 };
 
+ViewPort.prototype.dragable = function(status) {
+
+};
+
 ViewPort.prototype.update = function(delta) {
 	Entity.prototype.update.call(this, delta);
 

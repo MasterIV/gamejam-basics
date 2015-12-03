@@ -1,9 +1,6 @@
 function ImageEntity(pos, src, scale) {
-	Entity.call(this);
-	this.position = pos;
 	this.img = graphics[src];
-	this.size.x = this.img.width;
-	this.size.y = this.img.height;
+	Entity.call(this, pos, new V2(this.img.width, this.img.height));
 	this.scale = scale || 1;
 }
 
@@ -14,9 +11,7 @@ ImageEntity.prototype.onDraw = function(ctx) {
 };
 
 function RectEntity(pos, size, color) {
-	Entity.call(this);
-	this.position = pos;
-	this.size = size;
+	Entity.call(this, pos, size);
 	this.color = color || colors.default;
 }
 
@@ -29,8 +24,7 @@ RectEntity.prototype.onDraw = function(ctx) {
 };
 
 function TextEntity(pos, text, font) {
-	Entity.call(this);
-	this.position = pos;
+	Entity.call(this, pos);
 	this.text = text;
 	this.font = font || fonts.default;
 }
