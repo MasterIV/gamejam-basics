@@ -70,6 +70,8 @@ function TiledMap(data) {
 
 	this.size = new V2(w,h);
 	this.tile = new V2(data.tilewidth, data.tileheight);
+	this.height = data.height;
+	this.width = data.width;
 
 	this.palette = new TiledPalette(data.tilesets);
 	this.layers = data.layers;
@@ -109,10 +111,6 @@ TiledMap.prototype.toTile = function(pos) {
 	return pos.clone().grid(this.tile.x, this.tile.y);
 };
 
-TiledMap.prototype.tileAt = function(pos) {
-	return null;
-};
-
 TiledMap.prototype.getLayer = function(name) {
 	for(var i in this.layers) {
 		var l = this.layers[i];
@@ -121,12 +119,22 @@ TiledMap.prototype.getLayer = function(name) {
 };
 
 TiledMap.prototype.blocked = function(pos) {
+	if( pos.x < 0 || pos.y < 0 || pos.x >= this.width || pos.y >= this.height )
+		return true;
+
 	for(var i in this.layers) {
 		var l = this.layers[i];
-		if(l.collision && l[pos.x + (pos.y * l.width)])
+		if(l.collision && l.data && l.data[pos.x + (pos.y * l.width)])
 			return true;
 	}
 
 	return false;
 };
+
+// is this needed? i don't know
+TiledMap.prototype.tileAt = function(pos) {
+	return null;
+};
+
+// TODO: add support for object layers
 
