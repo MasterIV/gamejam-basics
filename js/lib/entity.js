@@ -2,6 +2,7 @@ function Entity() {
 	this.position = new V2(0, 0);
 	this.size = new V2(0, 0);
 	this.entities = [];
+	this.hidden = [];
 	this.blocking = [];
 }
 
@@ -51,6 +52,18 @@ Entity.prototype.getArea = function() {
 	return new Rect(this.position, this.position.sum(this.size));
 };
 
+Entity.prototype.hideEntities = function() {
+	if (!this.entities.length) return;
+	this.hidden = this.entities;
+	this.entities = [];
+};
+
+Entity.prototype.showEntities = function() {
+	if (!this.hidden.length) return;
+	this.entities = this.hidden;
+	this.hidden = [];
+};
+
 Entity.prototype.hover = function() {
 	return this.getArea().inside(mouse);
 };
@@ -82,10 +95,6 @@ Entity.prototype.mousedown = function(pos) {
 	if (!this.getArea().inside(pos)) return;
 	pos = pos.dif(this.position);
 	if (this.onMouseDown) this.onMouseDown(pos);
-
-	for (var i = 0; i < this.entities.length; i++)
-		if (this.entities[i].mousedown)
-			this.entities[i].mousedown(pos);
 
 	if( this.blocking.length ) {
 		this.dispatch(this.blocking, 'mousedown', pos );
