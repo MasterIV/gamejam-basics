@@ -17,9 +17,9 @@ ViewPort.prototype.dispatch = function(list, event, argurment) {
 	for (var i = 0; i < list.length; i++)
 		if (list[i][event]) {
 
-			if(event == 'draw' && this.getVisibleArea().collision(list[i].getArea()))
+			if(event == 'draw' && this.getVisibleArea().collision(list[i].relativeArea()))
 				list[i].draw(argurment);
-			if(event == 'update' && (this.updateHidden || this.getVisibleArea().collision(list[i].getArea())))
+			if(event == 'update' && (this.updateHidden || this.getVisibleArea().collision(list[i].relativeArea())))
 				list[i].update(argurment);
 			else
 				list[i][event](argurment);
