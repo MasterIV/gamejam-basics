@@ -1,3 +1,7 @@
+/* ========================================================================================= */
+/* ================================== Small helper function ================================ */
+/* ========================================================================================= */
+
 function limit( v, m ) {
 	return Math.min( m, Math.max( -m, v ));
 }
@@ -20,10 +24,14 @@ function arrayRemove( arr, element ) {
 	arr.splice( arr.indexOf( element ), 1 );
 }
 
+/* ========================================================================================= */
+/* ===================================== Polygon stuff ===================================== */
 // Given three vectors (V2) makes a right headed ray cast from a to line b/c
 // Returns -1 if ray intersects b/c
 // Returns  0 if a is on line b/c
 // Returns +1 if no intersection
+/* ========================================================================================= */
+
 function intersect( a, b, c ) {
 	if ( a.y == b.y && a.y == c.y ) { // a is on same y than b and c
 		if ( (b.x < a.x && a.x < c.x) || (c.x < a.x && a.x < b.x) )
@@ -48,3 +56,5 @@ function intersect( a, b, c ) {
 		return 1;
 	return 0;
 }
+
+

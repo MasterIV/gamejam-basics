@@ -1,6 +1,13 @@
-function HelpScene() {
-	Scene.call(this);
-	this.center(BackButton(scenes.menu));
-}
+define(['lib/scene', 'entity/back'],
+		function(Scene, BackButton) {
 
-HelpScene.prototype = new Scene();
+			function HelpScene() {
+				Scene.call(this);
+				this.center(BackButton('menu'));
+			}
+
+			HelpScene.prototype = new Scene();
+
+			return HelpScene;
+		}
+);

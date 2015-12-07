@@ -5,63 +5,14 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 
-		<script type="text/javascript" src="js/lib/config.js"></script>
-		<script type="text/javascript" src="js/lib/vector.js"></script>
-
-		<script type="text/javascript" src="data/config.js"></script>
-
-		<script type="text/javascript" src="js/lib/game.js"></script>
-		<script type="text/javascript" src="js/lib/controls.js"></script>
-		<script type="text/javascript" src="js/lib/mouse.js"></script>
-		<script type="text/javascript" src="js/lib/sound.js"></script>
-		<script type="text/javascript" src="js/lib/graphic.js"></script>
-
-		<script type="text/javascript" src="js/lib/sprite.js"></script>
-		<script type="text/javascript" src="js/lib/entity.js"></script>
-		<script type="text/javascript" src="js/lib/scene.js"></script>
-		<script type="text/javascript" src="js/lib/util.js"></script>
-		<script type="text/javascript" src="js/lib/ajax.js"></script>
-		<script type="text/javascript" src="js/lib/viewport.js"></script>
-		<script type="text/javascript" src="js/lib/map.js"></script>
-
-		<script type="text/javascript" src="js/ui/basic.js"></script>
-		<script type="text/javascript" src="js/ui/buttons.js"></script>
-		<script type="text/javascript" src="js/ui/custom.js"></script>
-
-		<script type="text/javascript" src="js/scenes/menu.js"></script>
-		<script type="text/javascript" src="js/scenes/credits.js"></script>
-		<script type="text/javascript" src="js/scenes/play.js"></script>
-		<script type="text/javascript" src="js/scenes/help.js"></script>
-
-		<script type="text/javascript" src="js/entity/player.js"></script>
-
+		<script type="text/javascript" src="js/require.js" data-main="js/main"></script>
+		<script type="text/javascript" src="js/util.js"></script>
 		<script type="text/javascript" src="data/map.js"></script>
 
-		<script type="text/javascript">
-			function init() {
-				graphics.load(function() {
-					document.getElementById('loading').style.display = 'none';
-
-					scenes.init();
-					controls.init();
-					mouse.init();
-					sound.load();
-
-					var scene = scenes.default;
-
-					if(config.debug) {
-						var url = document.location.href;
-						var hash = url.substring(url.indexOf("#")+1);
-						if( hash && scenes[hash] ) scene = scenes[hash];
-					}
-
-					game.init(scene);
-				});
-			}
-		</script>
+		<!-- <script type="text/javascript" src="game.js"></script> -->
 	</head>
 
-	<body onload="init();">
+	<body>
 		<div id="loading">
 			<p>Loading...</p>
 			<p><img src="img/loading.gif" alt="loading"></p>
