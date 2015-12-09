@@ -1,5 +1,7 @@
-define(['basic/entity', 'geo/v2', 'config/colors', 'basic/rect'],
-	function(Entity, V2, colors, RectEntity) {
+define(['basic/entity', 'geo/v2', 'config/colors', 'basic/rect', 'core/graphic', 'lib/animation'],
+	function(Entity, V2, colors, RectEntity, graphics, Animation) {
+		graphics.add('img/death.png');
+
 		function Player(pos) {
 			Entity.call(this);
 			this.position = pos;
@@ -20,6 +22,7 @@ define(['basic/entity', 'geo/v2', 'config/colors', 'basic/rect'],
 				case 'down': this.velocity.y = this.speed; break;
 				case 'left': this.velocity.x = -this.speed; break;
 				case 'right': this.velocity.x = this.speed; break;
+				case 'space': this.parent.add(new Animation('img/death.png', this.position.clone(), 7, 100)); break;
 			}
 		};
 
