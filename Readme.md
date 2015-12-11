@@ -5,8 +5,8 @@ Feature:
 * Animationen
 * Tield Maps
 * Basic Input handling
-** Mouse
-** Keyboard
+	* Mouse
+	* Keyboard
 * More stuff
 
 To-do liste:
