@@ -20,9 +20,31 @@ to be continued...
 
 ## Components
 
-### Entity
+### Entites
+
+### Scenes
+
+### Tiled Maps
+
+[Tiled](http://www.mapeditor.org/) is a very handy tool to create maps using Tile-Sets.
+
+```JavaScript
+// load the map file with the name map
+var map = new TiledMap('map');
+
+// renders all layers of the map and add them to the current entity / scene
+this.add(map.render());
+
+// render only specific layers of the map and add them
+this.add(map.render(['bg', 'Below']));
+```
 
 ### Viewport
+
+The Viewport is a special container for scrollable content. Usually it should be attached directly into the scene.
+You can use this for example for a Map that is larger than the screen. The Viewport could follow a player object 
+or if it is an overview map you could enable map scrolling by dragging. When you want to script some camera movement
+you can use the scrollTo method. I would strongly recommend to only use one of these methods at once.
 
 ```JavaScript
 // Create new Viewport, the constructer tells you if hidden entities should also be updated
