@@ -16,15 +16,16 @@ define(['geo/v2', 'geo/rect', 'core/mouse'], function(V2, Rect, mouse) {
 		var origin = new V2(0, 0);
 		var end = new V2(0, 0);
 
-		for (var i = 0; i < this.entities.length; i++) {
-			var entity = this.entities[i];
-			var p2 = entity.position.sum(entity.size);
+		for (var i = 0; i < this.entities.length; i++)
+			if(this.entities[i].size) {
+				var entity = this.entities[i];
+				var p2 = entity.position.sum(entity.size);
 
-			origin.x = Math.min(entity.position.x, origin.x);
-			origin.y = Math.min(entity.position.y, origin.y);
-			end.x = Math.max(p2.x, end.x);
-			end.y = Math.max(p2.y, end.y);
-		}
+				origin.x = Math.min(entity.position.x, origin.x);
+				origin.y = Math.min(entity.position.y, origin.y);
+				end.x = Math.max(p2.x, end.x);
+				end.y = Math.max(p2.y, end.y);
+			}
 
 		this.size = end.sub(origin);
 	};
@@ -55,7 +56,8 @@ define(['geo/v2', 'geo/rect', 'core/mouse'], function(V2, Rect, mouse) {
 	};
 
 	Entity.prototype.remove = function (entity) {
-		arrayRemove(this.entities, entity);
+		if( this.entities.indexOf(entity) > -1 ) arrayRemove(this.entities, entity);
+		if( this.blocking.indexOf(entity) > -1 ) arrayRemove(this.blocking, entity);
 	};
 
 	Entity.prototype.dispatch = function (list, event, argurment) {

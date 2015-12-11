@@ -1,16 +1,47 @@
-define(['basic/entity', 'geo/v2', 'geo/rect', 'config/screen'], function(Entity, V2, Rect, screen) {
+define(['basic/entity', 'geo/v2', 'geo/rect'], function(Entity, V2, Rect) {
+	function Movement(subject, pos, duration, callback) {
+		this.duration = duration;
+		this.anitime = 0;
+
+		this.subject = subject;
+		this.start = subject.position.clone();
+		this.end = pos;
+		this.dist = pos.dif(this.start);
+
+		this.callback = callback;
+	}
+
+	Movement.prototype.setParent = function(p) {
+		this.parent = p;
+	};
+
+	Movement.prototype.update = function(delta) {
+		this.anitime += delta;
+
+		if(this.anitime > this.duration) {
+			this.subject.setPosition(this.end.x, this.end.y);
+			this.parent.remove(this);
+			if(this.callback) this.callback();
+		} else {
+			var pos = this.start.sum(this.dist.prd(this.anitime/this.duration));
+			this.subject.setPosition(pos.x, pos.y);
+		}
+	};
+
 	function ViewPort(updateHidden) {
 		Entity.call(this);
 		this.updateHidden = updateHidden;
-		this.visible = new V2(screen.w, screen.h);
-
 		this.subject = null;
-
 		this.drag = false;
 		this.dragging = null;
 	}
 
 	ViewPort.prototype = new Entity();
+
+	ViewPort.prototype.setParent = function(p) {
+		this.parent = p;
+		this.visible = p.size.clone();
+	};
 
 	ViewPort.prototype.getVisibleArea = function() {
 		if(this.size.x == 0 && this.size.y == 0) this.inheritSize();
@@ -35,26 +66,35 @@ define(['basic/entity', 'geo/v2', 'geo/rect', 'config/screen'], function(Entity,
 		this.subject = entity;
 	};
 
-	ViewPort.prototype.scrollTo = function(pos) {
-
+	ViewPort.prototype.scrollTo = function(pos, speed, callback) {
+		this.add(new Movement(this, pos, speed, callback));
 	};
 
 	ViewPort.prototype.dragable = function(status) {
-		this.drag = true;
+		this.drag = status;
 	};
 
-	ViewPort.prototype.onMousedown = function(pos) {
+	ViewPort.prototype.onMouseDown = function(pos) {
 		if(this.drag) this.dragging = pos;
+	};
+
+	ViewPort.prototype.onMouseUp = function(pos) {
+		if(this.drag) this.dragging = null;
+	};
+
+	ViewPort.prototype.setPosition = function(x, y) {
+		this.position.x = Math.max(Math.min(0, x), this.visible.x-this.size.x );
+		this.position.y = Math.max(Math.min(0, y), this.visible.y-this.size.y );
 	};
 
 	ViewPort.prototype.update = function(delta) {
 		Entity.prototype.update.call(this, delta);
 
 		if( this.subject ) {
-			this.position.x = Math.max(Math.min(0, this.visible.x/2-this.subject.position.x), this.visible.x-this.size.x );
-			this.position.y = Math.max(Math.min(0, this.visible.y/2-this.subject.position.y), this.visible.y-this.size.y );
+			this.setPosition( this.visible.x/2-this.subject.position.x, this.visible.y/2-this.subject.position.y );
 		} else if( this.dragging ) {
-
+			var pos = this.parent.relativeMouse().dif(this.dragging);
+			this.setPosition( pos.x, pos.y );
 		}
 	};
 

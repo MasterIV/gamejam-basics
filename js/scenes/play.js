@@ -9,8 +9,13 @@ define(['lib/scene', 'entity/player', 'lib/map', 'lib/viewport', 'basic/rect', '
 				viewport.add(map.render(['bg', 'Below']));
 				viewport.add(player);
 				viewport.add(map.render(['More']));
-				viewport.add(new RectEntity(new V2(900, 700), new V2(100, 100), colors.default));
-				viewport.follow(player);
+				viewport.add(new RectEntity(new V2(1000, 900), new V2(100, 100), colors.default));
+
+				//viewport.follow(player);
+				//viewport.dragable(true);
+				viewport.scrollTo(new V2(-200,-200), 3000, function() {
+					viewport.dragable(true);
+				});
 
 				this.add(viewport);
 				this.keyAware.push(player);
