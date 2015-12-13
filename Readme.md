@@ -20,7 +20,63 @@ to be continued...
 
 ## Components
 
-### Entites
+### Core
+
+The core components contain some very basic stuff like input handling, graphics and sound.
+
+#### Controls
+
+This component handles keyboard input. By default it supports arrow keys/wasd and esc, space and enter key.
+If you want to use custom keys you have to modify the key mapping. The controls component gets automatically
+initialized in the main file. If you don't need keyboard input in your game, you can simply remove it from the
+main file. Once initialized the controls component will automatically notify the current scene about
+key-down and key up events.
+
+The default key mapping looks like this:
+
+```JavaScript
+switch( code ) {
+	case 116: return true; break; // F5
+	case 32: this.emit( type, 'space' ); break;
+	case 27: this.emit( type, 'esc' ); break;
+	case 13: this.emit( type, 'enter' ); break;
+
+	case 38: case 87: this.emit( type, 'up' ); break;
+	case 40: case 83: this.emit( type, 'down' ); break;
+	case 37: case 65: this.emit( type, 'left' ); break;
+	case 39: case 68: this.emit( type, 'right' ); break;
+}
+```
+
+To handle key input you can create the following methods on an entity:
+
+```JavaScript
+MyEntity.prototype.up = function (key) {
+	if(key == 'space')
+		this.stopFireWeapon();
+};
+
+MyEntity.prototype.down = function (key) {
+	if(key == 'space')
+		this.startFireWeapon();
+};
+```
+
+Attention: The key events are not published to all entities inside a scene.
+If you want to listen to key events in your entity you need to add it to the
+keyAware array of the scene.
+
+```JavaScript
+this.keyAware.push(new MyEntity());
+```
+
+#### Graphics
+
+The graphics component is used to load images.
+
+### Basic Entities
+
+#### Entites
 
 ### Scenes
 
