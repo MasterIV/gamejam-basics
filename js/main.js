@@ -12,8 +12,7 @@ define(
 			var scene = scenes.default;
 
 			if(config.debug) {
-				var url = document.location.href;
-				var hash = url.substring(url.indexOf("#")+1);
+				var hash = location.hash;
 				if( hash && scenes[hash] ) scene = scenes[hash];
 			}
 

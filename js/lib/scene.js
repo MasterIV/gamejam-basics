@@ -8,10 +8,13 @@ define(['basic/entity', 'geo/v2', 'core/graphic', 'config/screen', 'config/confi
 			Scene.prototype = new Entity();
 
 			Scene.prototype.onDraw = function (ctx) {
-				if (config.debug)
-					ctx.clearRect(0, 0, this.size.x, this.size.y);
-				if (this.bg)
+				if (config.debug) {
+					ctx.fillStyle = "#dddddd";
+					ctx.fillRect(0, 0, this.size.x, this.size.y);
+				}
+				if (this.bg) {
 					ctx.drawImage(graphics[this.bg], 0, 0);
+				}
 			};
 
 			Scene.prototype.center = function (obj) {
