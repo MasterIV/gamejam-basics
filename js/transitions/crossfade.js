@@ -1,8 +1,8 @@
 define(['lib/transition'],
 		function(TransitionScene) {
 
-			function CrossfadeTransition(fromScene, toScene, duration) {
-				TransitionScene.call(this, fromScene, toScene, duration);
+			function CrossfadeTransition(toScene, duration, easing) {
+				TransitionScene.call(this, toScene, duration, easing);
 			}
 
 			CrossfadeTransition.prototype = new TransitionScene();

@@ -1,8 +1,8 @@
 define(['lib/transition'],
 		function(TransitionScene) {
 
-			function DarkfadeTransition(fromScene, toScene, duration) {
-				TransitionScene.call(this, fromScene, toScene, duration);
+			function DarkfadeTransition(toScene, duration, easing) {
+				TransitionScene.call(this, toScene, duration, easing);
 			}
 
 			DarkfadeTransition.prototype = new TransitionScene();

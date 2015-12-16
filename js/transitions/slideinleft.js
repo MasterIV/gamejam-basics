@@ -1,8 +1,8 @@
 define(['lib/transition'],
 		function(TransitionScene) {
 
-			function SlideInLeftTransition(fromScene, toScene, duration) {
-				TransitionScene.call(this, fromScene, toScene, duration);
+			function SlideInLeftTransition(toScene, duration, easing) {
+				TransitionScene.call(this, toScene, duration, easing);
 			}
 
 			SlideInLeftTransition.prototype = new TransitionScene();
