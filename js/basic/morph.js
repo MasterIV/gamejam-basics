@@ -1,77 +1,64 @@
 define(['definition/easing'],
 		function(Easing) {
-			function Morph(obj, finalAttributes, duration, easingFunction) {
-				this.obj = obj;
+			function Morph(finalAttributes, duration, easingFunction, callback) {
 				this.attributes = finalAttributes;
-				this.duration = duration;
+				this.duration = (duration == null) ? 300 : duration;
 				this.easingFunction = easingFunction || Easing.LINEAR;
-				
-				this.callback = function(){};
-				this.then = null;
+
+				this.callback = callback;
 				this.animationTime = 0;
-				this.progress = 0;
+			}
+
+			Morph.prototype.initMorphAttributes = function(finalAttributes, target) {
+				for(var key in finalAttributes) {
+					var value = finalAttributes[key];
+					if("object" == typeof(value)) {
+						this.initMorphAttributes(value, target[key]);						
+					} else {
+						finalAttributes[key] = new MorphData(target[key], value);
+					}
+				}
 			}
 
 			Morph.prototype.update = function (delta) {
-				if(this.animationTime == 0) {
-					this.attributes = this.initAttributes(this.attributes, this.obj);
-				}
-				this.updateProgress(delta);
-				this.obj = this.updateAttributes(this.attributes, this.obj);
-				if(this.animationTime >= this.duration) {
-					this.callback();
-					if(this.then) this.parent.add(this.then);
-					this.reset();
-				}
-			}
-			
-			Morph.prototype.updateProgress = function(delta) {
 				this.animationTime += delta;
-				this.progress = this.animationTime / this.duration;
-				this.progress = Math.min(Math.max(this.progress, 0), 1);
-				this.progress = this.easingFunction(this.progress);
+				this.performMorph(this.attributes, this.parent);
+				if(this.animationTime >= this.duration) {
+					this.parent.remove(this);
+					if(this.callback) this.callback(this.parent);
+				}
 			}
-			
-			Morph.prototype.reset = function() {
-				this.parent.remove(this);
-				this.animationTime = 0;
-				this.progress = 0;
-			}
-			
-			Morph.prototype.updateAttributes = function(attr, obj) {
-				for(var key in attr) {
-					if(attr[key].constructor != MorphData) {
-						obj[key] = this.updateAttributes(attr[key], obj[key]);
+						
+			Morph.prototype.performMorph = function(attributes, target) {
+				var progress = this.getProgress();
+				for(var key in attributes) {
+					if(!(attributes[key] instanceof MorphData)) {
+						this.performMorph(attributes[key], target[key]);						
 					} else {
-						var value = attr[key].from;
-						var diff = attr[key].to - attr[key].from;
-						value += diff * this.progress;
-						obj[key] = value;
+						target[key] = attributes[key].valueForProgress(progress);
 					}
 				}
-				return obj;
 			}
 			
-			Morph.prototype.initAttributes = function(attr, obj) {
-				for(var key in attr) {
-					if(attr[key].constructor == MorphData) {
-						attr[key] = new MorphData(obj[key], attr[key].to);
-					} else if("object" == typeof(attr[key])) {
-						attr[key] = this.initAttributes(attr[key], obj[key]);
-					} else {
-						attr[key] = new MorphData(obj[key], attr[key]);
-					}
-				}
-				return attr;
+			Morph.prototype.getProgress = function(delta) {
+				var progress = this.animationTime / this.duration;
+				progress = Math.min(Math.max(progress, 0), 1);
+				return this.easingFunction(progress);
 			}
 			
 			Morph.prototype.setParent = function(parent){
 				this.parent = parent;
+				this.initMorphAttributes(this.attributes, this.parent);
 			}
 			
+			// Internal Helper			
 			function MorphData(from, to){
 				this.from = from;
 				this.to = to;
+			}
+			
+			MorphData.prototype.valueForProgress = function(progress) {
+				return this.from + (this.to - this.from) * progress;
 			}
 			
 			return Morph;

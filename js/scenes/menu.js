@@ -1,10 +1,10 @@
 define(['lib/scene', 'basic/button', 'core/game', 'geo/v2', 'transitions/slideinright', 'basic/morph', 'definition/easing'],
-	function(Scene, Button, game, V2, CrossfadeTransition, Morph, Easing) {
+	function(Scene, Button, game, V2, SlideInRightTransition, Morph, Easing) {
 		function MenuScene() {
 			Scene.call(this);
 
 			var playButton = Button.create(new V2(0, 680), function() { game.scene = require('config/scenes').play; }).rect(300, 80).text("Play");
-			var creditsButton = Button.create(new V2(0, 680), function() { game.scene = new CrossfadeTransition(game.scene, require('config/scenes').credits); }).rect(300, 80).text("Credits");
+			var creditsButton = Button.create(new V2(0, 680), function() { game.scene = new SlideInRightTransition(require('config/scenes').credits, 1000, Easing.OUTQUAD); }).rect(300, 80).text("Credits");
 			var helpButton = Button.create(new V2(0, 680), function() { game.scene = require('config/scenes').help; }).rect(300, 80).text("Help");
 		
 			this.center(playButton);
@@ -12,9 +12,14 @@ define(['lib/scene', 'basic/button', 'core/game', 'geo/v2', 'transitions/slidein
 			this.center(helpButton);
 
 			var easing = Easing.OUTELASTIC;
-			this.add(new Morph(playButton, { position: { y: 100 } }, 1500, easing));
-			this.add(new Morph(creditsButton, { position: { y: 250 } }, 1500, easing));
-			this.add(new Morph(helpButton, { position: { y: 400 } }, 1500, easing));
+			var self = this;
+			playButton.add(new Morph({ position: { y: 100 } }, 1500, easing, function(btn){ 
+				btn.add(new Morph({position:{x:10}}, 3000, easing, function(btn){
+					btn.add(new Morph({position:{x:self.size.x-btn.size.x-10}}, 3000, easing));
+				})); 
+			}));
+			creditsButton.add(new Morph({ position: { y: 250 } }, 1500, easing));
+			helpButton.add(new Morph({ position: { y: 400 } }, 1500, easing));
 		}
 
 		MenuScene.prototype = new Scene();
