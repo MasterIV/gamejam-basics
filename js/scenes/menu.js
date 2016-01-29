@@ -13,11 +13,8 @@ define(['lib/scene', 'basic/button', 'core/game', 'geo/v2', 'transitions/slidein
 
 			var easing = Easing.OUTELASTIC;
 			var self = this;
-			playButton.add(new Morph({ position: { y: 100 } }, 1500, easing, function(btn){ 
-				btn.add(new Morph({position:{x:10}}, 3000, easing, function(btn){
-					btn.add(new Morph({position:{x:self.size.x-btn.size.x-10}}, 3000, easing));
-				})); 
-			}));
+
+			playButton.add(new Morph({ position: { y: 100 } }, 1500, easing));
 			creditsButton.add(new Morph({ position: { y: 250 } }, 1500, easing));
 			helpButton.add(new Morph({ position: { y: 400 } }, 1500, easing));
 		}

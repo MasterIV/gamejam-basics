@@ -1,33 +1,4 @@
-define(['basic/entity', 'geo/v2', 'geo/rect'], function(Entity, V2, Rect) {
-	function Movement(subject, pos, duration, callback) {
-		this.duration = duration;
-		this.anitime = 0;
-
-		this.subject = subject;
-		this.start = subject.position.clone();
-		this.end = pos;
-		this.dist = pos.dif(this.start);
-
-		this.callback = callback;
-	}
-
-	Movement.prototype.setParent = function(p) {
-		this.parent = p;
-	};
-
-	Movement.prototype.update = function(delta) {
-		this.anitime += delta;
-
-		if(this.anitime > this.duration) {
-			this.subject.setPosition(this.end.x, this.end.y);
-			this.parent.remove(this);
-			if(this.callback) this.callback();
-		} else {
-			var pos = this.start.sum(this.dist.prd(this.anitime/this.duration));
-			this.subject.setPosition(pos.x, pos.y);
-		}
-	};
-
+define(['basic/entity', 'geo/v2', 'geo/rect', 'basic/morph'], function(Entity, V2, Rect, Morph) {
 	function ViewPort(updateHidden) {
 		Entity.call(this);
 		this.updateHidden = updateHidden;
@@ -67,7 +38,7 @@ define(['basic/entity', 'geo/v2', 'geo/rect'], function(Entity, V2, Rect) {
 	};
 
 	ViewPort.prototype.scrollTo = function(pos, speed, callback) {
-		this.add(new Movement(this, pos, speed, callback));
+		this.add(new Morph({position: pos}, speed, null, callback));
 	};
 
 	ViewPort.prototype.dragable = function(status) {
