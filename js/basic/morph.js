@@ -15,7 +15,7 @@ define(['definition/easing'],
 						var value = finalAttributes[key];
 						if("object" == typeof(value)) {
 							this.initMorphAttributes(value, target[key]);
-						} else {
+						} else if("function" != typeof(value)) {
 							finalAttributes[key] = new MorphData(target[key], value);
 						}
 					}
