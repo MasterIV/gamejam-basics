@@ -2,10 +2,17 @@ define(['basic/entity', 'geo/v2', 'basic/text', 'basic/rect', 'basic/image'],
 		function(Entity, V2, TextEntity, RectEntity, ImageEntity) {
 			function Button(pos, callback) {
 				Entity.call(this, pos);
-				this.onClick = callback;
+				this.onClick = function(p) {
+					callback(p);
+					return true;
+				}
 			}
 
 			Button.prototype = new Entity();
+
+			Button.prototype.onMouseDown = function() {
+				return true;
+			};
 
 			Button.create = function(pos, callback) {
 				return new Button(pos, callback);

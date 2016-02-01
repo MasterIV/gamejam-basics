@@ -5,6 +5,7 @@ define(['basic/entity', 'geo/v2', 'geo/rect', 'basic/morph'], function(Entity, V
 		this.subject = null;
 		this.drag = false;
 		this.dragging = null;
+		this.dragStart = null;
 	}
 
 	ViewPort.prototype = new Entity();
@@ -46,16 +47,28 @@ define(['basic/entity', 'geo/v2', 'geo/rect', 'basic/morph'], function(Entity, V
 	};
 
 	ViewPort.prototype.onMouseDown = function(pos) {
-		if(this.drag) this.dragging = pos;
+		if(this.drag) {
+			this.dragging = pos;
+			this.dragStart = this.position.clone();
+		}
 	};
 
 	ViewPort.prototype.onMouseUp = function(pos) {
-		if(this.drag) this.dragging = null;
+		if(this.drag) {
+			this.dragging = null;
+			this.dragStart = null;
+		}
 	};
 
 	ViewPort.prototype.setPosition = function(x, y) {
 		this.position.x = Math.max(Math.min(0, x), this.visible.x-this.size.x );
 		this.position.y = Math.max(Math.min(0, y), this.visible.y-this.size.y );
+	};
+
+	ViewPort.prototype.click = function(pos) {
+		var dif = this.dragStart ? this.dragStart.dif(this.position) : new V2(0,0);
+		if (this.dragging == null || (Math.abs(dif.x) < 2 && Math.abs(dif.y) < 2))
+			Entity.prototype.click.call(this, pos);
 	};
 
 	ViewPort.prototype.update = function(delta) {
@@ -68,6 +81,13 @@ define(['basic/entity', 'geo/v2', 'geo/rect', 'basic/morph'], function(Entity, V
 			this.setPosition( pos.x, pos.y );
 		}
 	};
+
+	ViewPort.prototype.centerSelf = function() {
+		if(this.size.x == 0 && this.size.y == 0) this.inheritSize();
+		this.position.x = ( this.parent.size.x - this.size.x ) / 2;
+		this.position.y = ( this.parent.size.y - this.size.y ) / 2;
+	};
+
 
 	return ViewPort;
 });

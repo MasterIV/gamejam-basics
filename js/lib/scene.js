@@ -17,11 +17,6 @@ define(['basic/entity', 'geo/v2', 'core/graphic', 'config/screen', 'config/confi
 				}
 			};
 
-			Scene.prototype.center = function (obj) {
-				obj.position.x = this.size.x / 2 - obj.size.x / 2;
-				this.add(obj);
-			};
-
 			Scene.prototype.up = function (key) {
 				this.dispatch(this.keyAware, 'up', key);
 			};

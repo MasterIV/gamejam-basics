@@ -5,6 +5,7 @@ define(['geo/v2', 'geo/rect', 'core/mouse'], function(V2, Rect, mouse) {
 		this.entities = [];
 		this.blocking = [];
 		this.parent = null;
+		this.visible = true;
 	}
 
 	Entity.prototype.setSize = function (w, h) {
@@ -66,6 +67,12 @@ define(['geo/v2', 'geo/rect', 'core/mouse'], function(V2, Rect, mouse) {
 				list[i][event](argurment);
 	};
 
+	Entity.prototype.dispatchReverse = function (list, event, argurment) {
+		for (var i = list.length-1; i >= 0; i--)
+			if (list[i][event])
+				if( list[i][event](argurment)) return true;
+	};
+
 	Entity.prototype.update = function (delta) {
 		if (this.onUpdate)
 			this.onUpdate(delta);
@@ -91,6 +98,7 @@ define(['geo/v2', 'geo/rect', 'core/mouse'], function(V2, Rect, mouse) {
 	};
 
 	Entity.prototype.draw = function (ctx) {
+		if(!this.visible) return;
 		ctx.save();
 		ctx.translate(this.position.x | 0, this.position.y | 0);
 
@@ -104,37 +112,42 @@ define(['geo/v2', 'geo/rect', 'core/mouse'], function(V2, Rect, mouse) {
 	Entity.prototype.click = function (pos) {
 		pos = pos.dif(this.position);
 		if (!this.getArea().inside(pos)) return;
-		if (this.onClick) this.onClick(pos);
+		if (this.onClick && this.onClick(pos)) return true;
 
 		if (this.blocking.length) {
-			this.dispatch(this.blocking, 'click', pos);
+			return this.dispatchReverse(this.blocking, 'click', pos);
 		} else {
-			this.dispatch(this.entities, 'click', pos);
+			return this.dispatchReverse(this.entities, 'click', pos);
 		}
 	};
 
 	Entity.prototype.mousedown = function (pos) {
 		pos = pos.dif(this.position);
 		if (!this.getArea().inside(pos)) return;
-		if (this.onMouseDown) this.onMouseDown(pos);
+		if (this.onMouseDown && this.onMouseDown(pos)) return true;
 
 		if (this.blocking.length) {
-			this.dispatch(this.blocking, 'mousedown', pos);
+			return this.dispatchReverse(this.blocking, 'mousedown', pos);
 		} else {
-			this.dispatch(this.entities, 'mousedown', pos);
+			return this.dispatchReverse(this.entities, 'mousedown', pos);
 		}
 	};
 
 	Entity.prototype.mouseup = function (pos) {
 		pos = pos.dif(this.position);
 		if (!this.getArea().inside(pos)) return;
-		if (this.onMouseUp) this.onMouseUp(pos);
+		if (this.onMouseUp && this.onMouseUp(pos)) return true;
 
 		if (this.blocking.length) {
-			this.dispatch(this.blocking, 'mouseup', pos);
+			return this.dispatchReverse(this.blocking, 'mouseup', pos);
 		} else {
-			this.dispatch(this.entities, 'mouseup', pos);
+			return this.dispatchReverse(this.entities, 'mouseup', pos);
 		}
+	};
+
+	Entity.prototype.center = function (obj) {
+		obj.position.x = this.size.x / 2 - obj.size.x / 2;
+		this.add(obj);
 	};
 
 	return Entity;
