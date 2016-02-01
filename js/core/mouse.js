@@ -1,4 +1,4 @@
-define(['geo/v2', 'core/game'], function(V2, game) {
+define(['geo/v2', 'core/game', 'config/config'], function(V2, game, config) {
 	var mouse = new V2( 0, 0 );
 
 	mouse.init = function() {
@@ -45,9 +45,10 @@ define(['geo/v2', 'core/game'], function(V2, game) {
 		}
 	};
 
-	document.addEventListener("contextmenu", function(e){
-		e.preventDefault();
-	}, false);
+	if(!config.debug)
+		document.addEventListener("contextmenu", function(e){
+			e.preventDefault();
+		}, false);
 
 	return mouse;
 });
