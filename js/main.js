@@ -12,7 +12,7 @@ define(
 			var scene = scenes.default;
 
 			if(config.debug) {
-				var hash = location.hash;
+				var hash = location.hash.substr(1);
 				if( hash && scenes[hash] ) scene = scenes[hash];
 			}
 
