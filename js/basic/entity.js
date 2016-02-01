@@ -105,6 +105,7 @@ define(['geo/v2', 'geo/rect', 'core/mouse'], function(V2, Rect, mouse) {
 		if (this.onDraw) this.onDraw(ctx);
 		this.dispatch(this.entities, 'draw', ctx);
 		this.dispatch(this.blocking, 'draw', ctx);
+		if (this.postDraw) this.postDraw(ctx);
 
 		ctx.restore();
 	};
