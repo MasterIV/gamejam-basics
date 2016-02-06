@@ -4,6 +4,15 @@ define(['geo/v2', 'core/game'], function(V2, game) {
 	mouse.init = function() {
 		var self = this;
 		var gameframe = document.getElementById('gameframe');
+		var primaryTouchId = null;
+		var getPrimaryTouch = function ( touches ) {
+			for(var i = 0, j = touches.length; i < j; i++) {
+				if(touches[i].identifier == primaryTouchId) {
+					return touches[i];
+				}
+			} 
+			return null;
+		};
 
 		gameframe.onmousemove = function( ev ) {
 			self.x = ( ev.clientX - gameframe.offsetLeft ) / game.scale;
@@ -11,42 +20,60 @@ define(['geo/v2', 'core/game'], function(V2, game) {
 		};
 
 		gameframe.onclick = function( ev ) {
-			if( game.scene.click )
+			if( game.scene.click ) {
 				game.scene.click( self );
+			}
 		};
 
 		gameframe.onmousedown = function( ev ) {
-			if( game.scene.mousedown )
+			if( game.scene.mousedown ) {
 				game.scene.mousedown( self );
+			}
 		};
 
 		gameframe.onmouseup = function( ev ) {
-			if( game.scene.mouseup )
+			if( game.scene.mouseup ) {
 				game.scene.mouseup( self );
+			}
 		};
 
 		/* Support for mobile devices */
 		gameframe.ontouchstart = function( ev ) {
-			this.onmousemove( ev.changedTouches[0] );
-			this.onmousedown( ev.changedTouches[0] );
+			if(primaryTouchId == null) {
+				this.onmousemove( ev.touches[0] );
+				this.onmousedown( ev.touches[0] );
+				primaryTouchId = ev.changedTouches[0].identifier;
+			}
 			ev.preventDefault();
-
 		};
 
 		gameframe.ontouchmove = function( ev ) {
-			this.onmousemove( ev.changedTouches[0] );
+			var touch = getPrimaryTouch(ev.touches);
+			if(touch != null) {
+				this.onmousemove( touch );
+			}
 			ev.preventDefault();
 		};
 
 		gameframe.ontouchend = function( ev ) {
-			this.onmouseup( ev.changedTouches[0] );
-			this.onclick( ev.changedTouches[0] );
-
+			var touch = getPrimaryTouch(ev.changedTouches);
+			if(touch != null) {
+				this.onmouseup( touch );
+				this.onclick( touch );
+				primaryTouchId = null;
+				self.x = -1;
+				self.y = -1;
+			}
+			ev.preventDefault();
+		};
+		
+		/* Support for mouse or touch leaving the game */
+		gameframe.onmouseout = function( ev ) {
 			self.x = -1;
 			self.y = -1;
-
-			ev.preventDefault();
-		}
+			gameframe.onmouseup( ev );
+		};
+		
 	};
 
 	document.addEventListener("contextmenu", function(e){
