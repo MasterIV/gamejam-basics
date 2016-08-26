@@ -1,7 +1,6 @@
 define(['lib/scene', 'entity/player', 'lib/map', 'lib/viewport', 'basic/rect', 'config/colors', 'geo/v2'],
 		function(Scene, Player, TiledMap, ViewPort, RectEntity, colors, V2 ) {
 			function PlayScene() {
-				Scene.call(this);
 
 				var player = new Player(new V2(500, 500));
 				var map = new TiledMap('map');

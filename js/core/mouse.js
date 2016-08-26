@@ -5,7 +5,7 @@ define(['geo/v2', 'core/game', 'config/config'], function(V2, game, config) {
 		var self = this;
 		var gameframe = document.getElementById('gameframe');
 
-		gameframe.onmousemove = function( ev ) {
+		gameframe.onmousemove = function (ev) {
 			self.x = ( ev.clientX - gameframe.offsetLeft ) / game.scale;
 			self.y = ( ev.clientY - gameframe.offsetTop ) / game.scale;
 		};

@@ -36,7 +36,7 @@ define(['basic/entity', 'geo/poly', 'config/colors', 'geo/v2', 'config/config'],
 					var offset = this.poly.getOffset();
 					ctx.strokeRect(offset.x, offset.y, this.size.x, this.size.y);
 					ctx.fillStyle = '#ff0000';
-					ctx.fillRect(-1,-1,3,3);
+					ctx.fillRect(-1, -1, 3, 3);
 				}
 			};
 

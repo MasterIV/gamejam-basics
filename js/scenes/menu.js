@@ -1,7 +1,6 @@
 define(['lib/scene', 'basic/button', 'core/game', 'geo/v2', 'transitions/slideinright', 'basic/morph', 'definition/easing', 'basic/layout'],
 	function(Scene, Button, game, V2, SlideInRightTransition, Morph, Easing, Layout) {
 		function MenuScene() {
-			Scene.call(this);
 
 			var playButton = Button.create(new V2(0, 680), function() { game.scene = require('config/scenes').play; }).rect(280, 80).text("Play");
 			var creditsButton = Button.create(new V2(0, 680), function() { game.scene = new SlideInRightTransition(require('config/scenes').credits, 1000, Easing.OUTQUAD); }).rect(360, 80).text("Credits");
