@@ -1,5 +1,5 @@
 define(
-	['_custom/config/scenes', '_custom/config/config', '_framework/core/graphic', '_framework/core/mouse', '_framework/core/controls', '_framework/core/sound', '_framework/core/game'],
+	['game/config/scenes', 'game/config/config', 'system/core/graphic', 'system/core/mouse', 'system/core/controls', 'system/core/sound', 'system/core/game'],
 	function (scenes, config, graphics, mouse, controls, sound, game) {
 		graphics.load(function() {
 			document.getElementById('loading').style.display = 'none';
