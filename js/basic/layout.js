@@ -9,8 +9,8 @@ define(['basic/entity'],
 			Layout.prototype = new Entity();
 
 			Layout.prototype.adjustFixed = function(axis, entity) {
-				entity.position[axis] = this.position[axis] + this.margin;
-				if( this.size[axis]< entity.size[axis] + 2*this.margin )
+				entity.position[axis] = this.margin;
+				if( this.size[axis] < entity.size[axis] + 2*this.margin )
 					this.size[axis] = entity.size[axis] + 2*this.margin;
 			};
 
@@ -19,6 +19,22 @@ define(['basic/entity'],
 				for(var i in this.entities ) p += this.entities[i].size[axis] || 0;
 				entity.position[axis] = p;
 				this.size[axis] = entity.position[axis] + entity.size[axis] + this.margin;
+			};
+
+			Layout.prototype.align = function(orientation) {
+				for(var i in this.entities ) {
+					var e = this.entities[i];
+
+					if(orientation == "center") {
+						e.position.x = ( this.size.x - e.size.x ) / 2;
+					} else if( orientation == "right") {
+						e.position.x = this.size.x - e.size.x - this.margin;
+					} else if( orientation == "middle") {
+						e.position.y = ( this.size.y - e.size.y ) / 2;
+					} else if( orientation == "bottom") {
+						e.position.y = this.size.y - e.size.y - this.margin;
+					}
+				}
 			};
 
 			function VerticalLayout(pos, margin, spacing) {
@@ -33,6 +49,18 @@ define(['basic/entity'],
 				Entity.prototype.add.call(this, e);
 			};
 
+			VerticalLayout.prototype.align = function(orientation) {
+				for(var i in this.entities ) {
+					var e = this.entities[i];
+
+					if(orientation == "center") {
+						e.position.x = ( this.size.x - e.size.x ) / 2;
+					} else if( orientation == "right") {
+						e.position.x = this.size.x - e.size.x - this.margin;
+					}
+				}
+			};
+
 			function HorizontalLayout() {
 				Layout.call(this ,pos, margin, spacing);
 			}
@@ -43,6 +71,18 @@ define(['basic/entity'],
 				this.adjustFixed('y', e);
 				this.adjustFlexible('x', e);
 				Entity.prototype.add.call(this, e);
+			};
+
+			HorizontalLayout.prototype.align = function(orientation) {
+				for(var i in this.entities ) {
+					var e = this.entities[i];
+
+					if( orientation == "center") {
+						e.position.y = ( this.size.y - e.size.y ) / 2;
+					} else if( orientation == "bottom") {
+						e.position.y = this.size.y - e.size.y - this.margin;
+					}
+				}
 			};
 
 			return {
