@@ -1,5 +1,5 @@
-define(['system/geo/v2', 'system/core/game', 'game/config/config'], function(V2, game, config) {
-	var mouse = new V2( 0, 0 );
+define(['system/geo/vector2', 'system/core/game', 'game/config/config'], function(Vector2, game, config) {
+	var mouse = new Vector2( 0, 0 );
 
 	mouse.init = function() {
 		var self = this;

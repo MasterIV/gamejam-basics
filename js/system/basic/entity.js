@@ -1,4 +1,4 @@
-define(['system/geo/v2', 'system/geo/rect', 'system/core/mouse'], function(V2, Rect, mouse) {
+define(['system/geo/vector2', 'system/geo/rect', 'system/core/mouse'], function(Vector2, Rect, mouse) {
     function Entity(pos, size) {
 
 		this.position = pos || Zero();
@@ -19,8 +19,8 @@ define(['system/geo/v2', 'system/geo/rect', 'system/core/mouse'], function(V2, R
 	};
 
 	Entity.prototype.inheritSize = function () {
-		var origin = new V2(0, 0);
-		var end = new V2(0, 0);
+		var origin = new Vector2(0, 0);
+		var end = new Vector2(0, 0);
 
 		for (var i = 0; i < this.entities.length; i++)
 			if(this.entities[i].size) {

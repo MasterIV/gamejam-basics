@@ -1,4 +1,4 @@
-define(['system/geo/v2'], function(V2) {
+define(['system/geo/vector2'], function(Vector2) {
 	function Circ(center, radius) {
 		this.center = center;
 		this.radius = radius;

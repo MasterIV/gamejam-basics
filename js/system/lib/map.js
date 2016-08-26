@@ -1,7 +1,7 @@
 var onTileMapLoaded;
 
-define(['system/basic/entity', 'system/core/graphic', 'system/geo/v2'],
-		function(Entity, graphics, V2) {
+define(['system/basic/entity', 'system/core/graphic', 'system/geo/vector2'],
+		function(Entity, graphics, Vector2) {
 			function imagePath(url) {
 				return url.substr(url.indexOf("img/"));
 			}
@@ -63,7 +63,7 @@ define(['system/basic/entity', 'system/core/graphic', 'system/geo/v2'],
 			function TiledLayer(canvas, pos) {
 				Entity.call(this);
 				this.position = pos || Zero();
-				this.size = new V2(canvas.width, canvas.height);
+				this.size = new Vector2(canvas.width, canvas.height);
 				this.img = canvas;
 				this.scale = 1;
 			}
@@ -79,8 +79,8 @@ define(['system/basic/entity', 'system/core/graphic', 'system/geo/v2'],
 				var w = data.width * data.tilewidth;
 				var h = data.height * data.tileheight;
 
-				this.size = new V2(w,h);
-				this.tile = new V2(data.tilewidth, data.tileheight);
+				this.size = new Vector2(w,h);
+				this.tile = new Vector2(data.tilewidth, data.tileheight);
 				this.height = data.height;
 				this.width = data.width;
 

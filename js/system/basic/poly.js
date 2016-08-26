@@ -1,5 +1,5 @@
-define(['system/basic/entity', 'system/geo/poly', 'game/config/colors', 'system/geo/v2', 'game/config/config'],
-		function(Entity, Poly, colors, V2, config) {
+define(['system/basic/entity', 'system/geo/poly', 'game/config/colors', 'system/geo/vector2', 'game/config/config'],
+		function(Entity, Poly, colors, Vector2, config) {
 			function PolyEntity(pos, vector_list, color) {
 				this.color = color || colors.default;
 				this.poly = new Poly(vector_list);

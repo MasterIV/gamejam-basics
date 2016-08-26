@@ -1,5 +1,5 @@
-define(['system/basic/entity', 'system/geo/v2', 'system/basic/text', 'system/basic/rect', 'system/basic/image'],
-		function(Entity, V2, TextEntity, RectEntity, ImageEntity) {
+define(['system/basic/entity', 'system/geo/vector2', 'system/basic/text', 'system/basic/rect', 'system/basic/image'],
+		function(Entity, Vector2, TextEntity, RectEntity, ImageEntity) {
 			function Button(pos, callback) {
 				Entity.call(this, pos);
 				this.onClick = function(p) {
@@ -23,7 +23,7 @@ define(['system/basic/entity', 'system/geo/v2', 'system/basic/text', 'system/bas
 				this.size.y = Math.max(h||0, this.size.y);
 
 				var self = this;
-				var txt = new TextEntity(new V2(this.size.x/2, this.size.y/2), text, font);
+				var txt = new TextEntity(new Vector2(this.size.x/2, this.size.y/2), text, font);
 
 				txt.hover = function() { return self.hover(); };
 				this.setText = function(s) { txt.text = s };
@@ -42,7 +42,7 @@ define(['system/basic/entity', 'system/geo/v2', 'system/basic/text', 'system/bas
 
 			Button.prototype.rect = function(w, h, color) {
 				var self = this;
-				var rect = new RectEntity(Zero(), new V2(w,h), color);
+				var rect = new RectEntity(Zero(), new Vector2(w,h), color);
 
 				rect.hover = function() { return self.hover(); };
 

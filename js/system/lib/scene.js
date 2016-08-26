@@ -1,7 +1,7 @@
-define(['system/basic/entity', 'system/geo/v2', 'system/core/graphic', 'game/config/screen', 'game/config/config'],
-		function (Entity, V2, graphics, screen, config) {
+define(['system/basic/entity', 'system/geo/vector2', 'system/core/graphic', 'game/config/screen', 'game/config/config'],
+		function (Entity, Vector2, graphics, screen, config) {
 		    function Scene() {
-				Entity.call(this, Zero(), new V2(screen.w, screen.h));
+				Entity.call(this, Zero(), new Vector2(screen.w, screen.h));
 				this.keyAware = [];
 			    this.bgColor = "#DDD";
 			}

@@ -1,4 +1,4 @@
-define(['system/geo/v2', 'system/geo/rect'], function(V2, Rect) {
+define(['system/geo/vector2', 'system/geo/rect'], function(Vector2, Rect) {
 	function Poly( vector_list ) {
 		if ( config.debug && vector_list.length < 3 )
 			console.log("Warning: Creating polygon with less than three vertices!");
@@ -13,8 +13,8 @@ define(['system/geo/v2', 'system/geo/rect'], function(V2, Rect) {
 
 // Get a surrounding rectangle for rough checks
 	Poly.prototype.calcSize = function() {
-		var origin = new V2(this.points[0].x, this.points[0].y);
-		var end = new V2(this.points[0].x, this.points[0].y);
+		var origin = new Vector2(this.points[0].x, this.points[0].y);
+		var end = new Vector2(this.points[0].x, this.points[0].y);
 		for (var i = 0; i < this.points.length; i++) {
 			var point = this.points[i];
 
@@ -28,12 +28,12 @@ define(['system/geo/v2', 'system/geo/rect'], function(V2, Rect) {
 
 // Returns the offset relative to 0,0
 	Poly.prototype.getOffset = function() {
-		return new V2( this.sizeRect.p1.x, this.sizeRect.p1.y );
+		return new Vector2( this.sizeRect.p1.x, this.sizeRect.p1.y );
 	};
 
 // Return width / height of surrounding rectangle
 	Poly.prototype.getSize = function() {
-		return new V2( this.sizeRect.p2.x - this.sizeRect.p1.x, this.sizeRect.p2.y - this.sizeRect.p1.y );
+		return new Vector2( this.sizeRect.p2.x - this.sizeRect.p1.x, this.sizeRect.p2.y - this.sizeRect.p1.y );
 	};
 
 	Poly.prototype.move = function( v ) {
@@ -51,7 +51,7 @@ define(['system/geo/v2', 'system/geo/rect'], function(V2, Rect) {
 		// even-odd rule
 
 		var t = -1;
-		var tpoints = [ new V2(this.points[this.points.length-1].x, this.points[this.points.length-1].y) ];
+		var tpoints = [ new Vector2(this.points[this.points.length-1].x, this.points[this.points.length-1].y) ];
 		tpoints = tpoints.concat(this.points);
 		for (var i = 0; i < tpoints.length - 1; i++) {
 			t *= intersect( v, tpoints[i], tpoints[i+1] );

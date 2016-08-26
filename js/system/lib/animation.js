@@ -1,7 +1,7 @@
-define(['system/basic/entity', 'system/core/graphic', 'system/geo/v2'],
-		function (Entity, graphics, V2) {
+define(['system/basic/entity', 'system/core/graphic', 'system/geo/vector2'],
+		function (Entity, graphics, Vector2) {
 			function Animation( img, pos, frames, speed, loop ) {
-				this.frames = typeof frames == 'number' ? new V2(frames, 1) : frames;
+				this.frames = typeof frames == 'number' ? new Vector2(frames, 1) : frames;
 				this.img = graphics[img];
 				this.loop = loop;
 
@@ -10,7 +10,7 @@ define(['system/basic/entity', 'system/core/graphic', 'system/geo/v2'],
 				this.frame = 0;
 				this.state = 0;
 
-				Entity.call(this, pos, new V2(this.img.width / this.frames.x, this.img.height / this.frames.y ));
+				Entity.call(this, pos, new Vector2(this.img.width / this.frames.x, this.img.height / this.frames.y ));
 			}
 
 			Animation.prototype = new Entity();

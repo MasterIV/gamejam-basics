@@ -1,8 +1,8 @@
-define(['system/core/graphic', 'system/geo/v2', 'system/basic/entity'],
-		function(graphics, V2, Entity) {
+define(['system/core/graphic', 'system/geo/vector2', 'system/basic/entity'],
+		function(graphics, Vector2, Entity) {
 			function ImageEntity(pos, src, scale) {
 				this.img = graphics[src];
-				Entity.call(this, pos, new V2(this.img.width, this.img.height));
+				Entity.call(this, pos, new Vector2(this.img.width, this.img.height));
 				this.scale = scale || 1;
 			}
 

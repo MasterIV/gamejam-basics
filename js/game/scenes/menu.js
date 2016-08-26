@@ -1,12 +1,12 @@
-define(['system/lib/scene', 'system/basic/button', 'system/core/game', 'system/geo/v2', 'system/transitions/slideinright', 'system/basic/morph', 'system/definition/easing', 'system/basic/layout'],
-	function(Scene, Button, game, V2, SlideInRightTransition, Morph, Easing, Layout) {
+define(['system/lib/scene', 'system/basic/button', 'system/core/game', 'system/geo/vector2', 'system/transitions/slideinright', 'system/basic/morph', 'system/definition/easing', 'system/basic/layout'],
+	function(Scene, Button, game, Vector2, SlideInRightTransition, Morph, Easing, Layout) {
 		function MenuScene() {
 
-			var playButton = Button.create(new V2(0, 680), function() { game.scene = require('game/config/scenes').play; }).rect(280, 80).text("Play");
-			var creditsButton = Button.create(new V2(0, 680), function() { game.scene = new SlideInRightTransition(require('game/config/scenes').credits, 1000, Easing.OUTQUAD); }).rect(360, 80).text("Credits");
-			var helpButton = Button.create(new V2(0, 680), function() { game.scene = require('game/config/scenes').help; }).rect(300, 80).text("Help");
+			var playButton = Button.create(new Vector2(0, 680), function() { game.scene = require('game/config/scenes').play; }).rect(280, 80).text("Play");
+			var creditsButton = Button.create(new Vector2(0, 680), function() { game.scene = new SlideInRightTransition(require('game/config/scenes').credits, 1000, Easing.OUTQUAD); }).rect(360, 80).text("Credits");
+			var helpButton = Button.create(new Vector2(0, 680), function() { game.scene = require('game/config/scenes').help; }).rect(300, 80).text("Help");
 
-			var vLayout = new Layout.vertical(new V2(0, 100), 20, 50);
+			var vLayout = new Layout.vertical(new Vector2(0, 100), 20, 50);
 			vLayout.add(playButton);
 			vLayout.add(creditsButton);
 			vLayout.add(helpButton);

@@ -1,12 +1,12 @@
-define(['system/basic/entity', 'system/geo/v2', 'game/config/colors', 'system/basic/rect', 'system/core/graphic', 'system/lib/animation'],
-	function(Entity, V2, colors, RectEntity, graphics, Animation) {
+define(['system/basic/entity', 'system/geo/vector2', 'game/config/colors', 'system/basic/rect', 'system/core/graphic', 'system/lib/animation'],
+	function(Entity, Vector2, colors, RectEntity, graphics, Animation) {
 		graphics.add('img/death.png');
 
 		function Player(pos) {
 			Entity.call(this);
 			this.position = pos;
-			this.add(new RectEntity(Zero(), new V2(40, 80), colors.player));
-			this.velocity = new V2(0,0);
+			this.add(new RectEntity(Zero(), new Vector2(40, 80), colors.player));
+			this.velocity = new Vector2(0,0);
 			this.speed = 100;
 		}
 

@@ -1,11 +1,11 @@
-define(['system/geo/v2'], function(V2) {
+define(['system/geo/vector2'], function(Vector2) {
 	function Rect( p1, p2 ) {
 		this.p1 = p1;
 		this.p2 = p2;
 	}
 
 	Rect.create = function(x1,y1,x2,y2) {
-		return new Rect( new V2( x1, y1 ), new V2( x2, y2 ));
+		return new Rect( new Vector2( x1, y1 ), new Vector2( x2, y2 ));
 	};
 
 	Rect.prototype.collision = function( r ) {
@@ -17,8 +17,8 @@ define(['system/geo/v2'], function(V2) {
 
 	Rect.prototype.combine = function( r ) {
 		return new Rect(
-				new V2( Math.min( this.p1.x, r.p1.x ), Math.min( this.p1.y, r.p1.y )),
-				new V2( Math.max( this.p2.x, r.p2.x ), Math.max( this.p2.y, r.p2.y ))
+				new Vector2( Math.min( this.p1.x, r.p1.x ), Math.min( this.p1.y, r.p1.y )),
+				new Vector2( Math.max( this.p2.x, r.p2.x ), Math.max( this.p2.y, r.p2.y ))
 		);
 	};
 

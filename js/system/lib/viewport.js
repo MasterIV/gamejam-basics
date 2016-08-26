@@ -1,4 +1,4 @@
-define(['system/basic/entity', 'system/geo/v2', 'system/geo/rect', 'system/basic/morph'], function(Entity, V2, Rect, Morph) {
+define(['system/basic/entity', 'system/geo/vector2', 'system/geo/rect', 'system/basic/morph'], function(Entity, Vector2, Rect, Morph) {
 	function ViewPort(updateHidden) {
 		Entity.call(this);
 		this.updateHidden = updateHidden;
@@ -66,7 +66,7 @@ define(['system/basic/entity', 'system/geo/v2', 'system/geo/rect', 'system/basic
 	};
 
 	ViewPort.prototype.click = function(pos) {
-		var dif = this.dragStart ? this.dragStart.dif(this.position) : new V2(0,0);
+		var dif = this.dragStart ? this.dragStart.dif(this.position) : new Vector2(0,0);
 		if (this.dragging == null || (Math.abs(dif.x) < 2 && Math.abs(dif.y) < 2))
 			Entity.prototype.click.call(this, pos);
 	};
