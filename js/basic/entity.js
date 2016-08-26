@@ -1,7 +1,12 @@
 define(['geo/v2', 'geo/rect', 'core/mouse'], function(V2, Rect, mouse) {
-	function Entity(pos, size) {
+    function Entity(pos, size) {
+
 		this.position = pos || Zero();
 		this.size = size || Zero();
+		this.rotation = 0;
+		this.pivot = Zero(); // between 0,0 and 1,1
+        this.scale = 1;
+
 		this.entities = [];
 		this.blocking = [];
 		this.parent = null;
@@ -98,14 +103,22 @@ define(['geo/v2', 'geo/rect', 'core/mouse'], function(V2, Rect, mouse) {
 	};
 
 	Entity.prototype.draw = function (ctx) {
-		if(!this.visible) return;
+	    if (!this.visible)
+	        return;
 		ctx.save();
 		ctx.translate(this.position.x | 0, this.position.y | 0);
+		ctx.translate(this.size.x * this.pivot.x * this.scale, this.size.y * this.pivot.y * this.scale);
+		ctx.rotate(this.rotation * Math.PI / 180);
+		ctx.translate(-this.size.x * this.pivot.x * this.scale, -this.size.y * this.pivot.y * this.scale);
 
-		if (this.onDraw) this.onDraw(ctx);
+		if (this.onDraw)
+		    this.onDraw(ctx);
+
 		this.dispatch(this.entities, 'draw', ctx);
 		this.dispatch(this.blocking, 'draw', ctx);
-		if (this.postDraw) this.postDraw(ctx);
+
+		if (this.postDraw)
+		    this.postDraw(ctx);
 
 		ctx.restore();
 	};
