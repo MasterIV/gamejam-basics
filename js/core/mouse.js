@@ -38,38 +38,36 @@ define(['geo/v2', 'core/game', 'config/config'], function (V2, game, config) {
 
 		/* Support for mobile devices */
 		gameframe.ontouchstart = function (ev) {
-			if (primaryTouchId == null) {
-				this.onmousemove(ev.touches[0]);
-				this.onmousedown(ev.touches[0]);
-				primaryTouchId = ev.changedTouches[0].identifier;
-			}
-
 			ev.preventDefault();
+			if (primaryTouchId != null) return;
+
+			this.onmousemove(ev.touches[0]);
+			this.onmousedown(ev.touches[0]);
+			primaryTouchId = ev.changedTouches[0].identifier;
 		};
 
 		gameframe.ontouchmove = function (ev) {
 			var touch = getPrimaryTouch(ev.touches);
-
-			if (touch != null) {
-				this.onmousemove(touch);
-			}
-
 			ev.preventDefault();
+
+			if (touch == null) return;
+			this.onmousemove(touch);
 		};
 
 		gameframe.ontouchend = function (ev) {
 			var touch = getPrimaryTouch(ev.changedTouches);
-
-			if (touch != null) {
-				this.onmouseup(touch);
-				this.onclick(touch);
-				primaryTouchId = null;
-			}
-
 			ev.preventDefault();
+			if (touch == null) return;
+
+			this.onmouseup(touch);
+			this.onclick(touch);
+			primaryTouchId = null;
+
+			self.x = -1;
+			self.y = -1;
 		};
 
-		/* Support for mouse or touch leaving the game */
+		/* Support for mouse leaving the game */
 		gameframe.onmouseout = function (ev) {
 			gameframe.onmouseup(ev);
 		};
