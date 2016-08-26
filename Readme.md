@@ -13,16 +13,33 @@ To-do liste:
 
 * Collisions
 * Anchoring
+* Particles
 
 ## Getting started
 
-to be continued...
+When you check out the project you can already open the index.html and you will find a very basic example. 
+The example includes four [scenes](https://github.com/MasterIV/gamejam-basics/tree/master/js/scenes): 
+menu, credits, help and play.
+The first three of them are basically only UI, in the play scene you have some examples how components
+could be used.
+
+But let's start with the basics. You might ask your self: what is a scene?
+All elements in a game usually have to cycles which are called every frame.
+First the update cycle, which usually contains all calculations and draw
+cycle which displays our element. We call this kind of game elements Entities.
+An Entity could be everything: the player, the map, some obstacles, flying bullets or enemies.
+Entities are usually organized in some sort of tree like structure, we call the scene graph.
+A scene is now a special sort of Entity, it is the root node of our tree structure.
+Only if the scene is active all child entities of it get drawn and update.
+
+> to be continued...
 
 ## Components
 
 ### Core
 
 The core components contain some very basic stuff like input handling, graphics and sound.
+If you don't need them or don't want to use them you can disable the initialization in the main.js
 
 #### Controls
 
@@ -72,7 +89,58 @@ this.keyAware.push(new MyEntity());
 
 #### Graphics
 
-The graphics component is used to load images.
+The graphics component is used to load images. 
+Add all images when your module is initialized, not when the entities are created.
+All added images will be loaded before the game starts and are then available during game runtime.
+
+```JavaScript
+// Add image to be loaded on game start
+graphic.add("myimage.png");
+
+// use the image inside the game
+ctx.drawImage(graphic["myimage.png"], 0 ,0);
+```
+
+#### Sound
+
+Like with the graphics it is possible to preload sound. But for sound it is not required.
+You may play sound files that you haven't preloaded. This will load the clips on demand
+which might result in a short playback delay. As soon as you played a sound once it loaded
+and no delays should appear in future playbacks. The preloading of sound happens asynchronous.
+It will not delay the start of the game.
+
+```JavaScript
+// Add sound to be loaded on game start
+sounds.add("mysound.mp3");
+
+// play a sound
+sounds.play("mysound.mp3");
+```
+
+> TODO: Format support
+
+#### Mouse
+
+Once initialized the mouse is a V2 representing the position of the mouse. 
+When creating an Entity you could define multiple callbacks to react on mouse events:
+
+```JavaScript
+function MyEntity() {
+	Entity.call(this);
+}
+
+MyEntity.prototype = new Entity();
+
+// these events are emitted independend from the game loop, so be careful
+MyEntity.prototype.onClick = function(pos) { "... some code here ..."; }
+MyEntity.prototype.onMouseDown = function(pos) { "... some code here ..."; }
+MyEntity.prototype.onMouseUp = function(pos) { "... some code here ..."; }
+
+// to create a hove effect you need to check in the draw method if the mouse intersects with your entity
+MyEntity.prototype.onDraw = function(ctx) {
+	var hover = this.hover();
+}
+```
 
 ### Basic Entities
 
