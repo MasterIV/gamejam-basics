@@ -6,11 +6,13 @@ define(['lib/scene', 'basic/button', 'core/game', 'geo/v2', 'transitions/slidein
 			var playButton = Button.create(new V2(0, 680), function() { game.scene = require('config/scenes').play; }).rect(280, 80).text("Play");
 			var creditsButton = Button.create(new V2(0, 680), function() { game.scene = new SlideInRightTransition(require('config/scenes').credits, 1000, Easing.OUTQUAD); }).rect(360, 80).text("Credits");
 			var helpButton = Button.create(new V2(0, 680), function() { game.scene = require('config/scenes').help; }).rect(300, 80).text("Help");
+			var particlesButton = Button.create(new V2(0, 680), function() { game.scene = require('config/scenes').particles; }).rect(300, 80).text("Particles");
 
-			var vLayout = new Layout.vertical(new V2(0, 100), 20, 50);
+			var vLayout = new Layout.vertical(new V2(0, 20), 20, 50);
 			vLayout.add(playButton);
 			vLayout.add(creditsButton);
 			vLayout.add(helpButton);
+			vLayout.add(particlesButton);
 			vLayout.align("center");
 			this.center(vLayout);
 

@@ -61,8 +61,8 @@ define(['basic/entity'],
 				}
 			};
 
-			function HorizontalLayout() {
-				Layout.call(this ,pos, margin, spacing);
+			function HorizontalLayout(pos, margin, spacing) {
+				Layout.call(this, pos, margin, spacing);
 			}
 
 			HorizontalLayout.prototype = new Layout();
