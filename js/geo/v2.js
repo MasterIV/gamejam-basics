@@ -29,6 +29,15 @@ define(function() {
 	V2.prototype.equal = function( v ) { return v.x == this.x && v.y == this.y };
 	V2.prototype.abs = function() { return new V2( Math.abs(this.x), Math.abs(this.y)); };
 
+	V2.prototype.fromDeg = function (angle, length) {
+		this.fromRad(angle * ( Math.PI / 180 ), length);
+	};
+
+	V2.prototype.fromRad = function (angle, length) {
+		this.x = Math.round(Math.sin(angle) * length);
+		this.y = -Math.round(Math.cos(angle) * length);
+	};
+
 	V2.fromDeg = function (angle, length) {
 		return V2.fromRad(angle * ( Math.PI / 180 ), length);
 	};

@@ -10,6 +10,7 @@ define(['basic/entity', 'geo/v2', 'definition/random'],
 					lifetime: 2000,
 					scale: 1,
 					offset: Zero(),
+					color: 'red',
 
 					// Emission Settings
 					autoplay: true,
@@ -20,12 +21,12 @@ define(['basic/entity', 'geo/v2', 'definition/random'],
 				};
 
 				for(var i in config)
-					if(this.config[i] )
-						this.config[i] = config[i];
+					this.config[i] = config[i];
 
 				this.last = 0;
 				this.timer = this.config.autoplay ? 0 : this.config.interval;
 				this.rate = this.config.interval / this.config.rate;
+				this.pool = [];
 			}
 
 			Particles.prototype = new Entity();
@@ -54,7 +55,8 @@ define(['basic/entity', 'geo/v2', 'definition/random'],
 			};
 
 			Particles.prototype.spawn = function() {
-				this.add(new Particle(eor(this.config.offset).clone(), this.config));
+				if(this.pool.length) this.add(this.pool.shift().init(eor(this.config.offset), this.config));
+				else this.add(new Particle(eor(this.config.offset), this.config));
 			};
 
 			Particles.prototype.play = function() {
@@ -65,21 +67,30 @@ define(['basic/entity', 'geo/v2', 'definition/random'],
 			/* ======= Here comes the particle ======= */
 
 			function Particle(pos, config) {
-				Entity.call(this, pos);
+				Entity.call(this, pos.clone());
+				this.velocity = Zero();
+				this.init(pos, config);
+			}
+
+			Particle.prototype = new Entity();
+
+			Particle.prototype.init = function(pos, config) {
+				this.position.x = pos.x;
+				this.position.y = pos.y;
 				this.config = config;
 				this.timer = 0;
 
 				this.lifetime = eor( config.lifetime );
-				this.velocity = V2.fromDeg( eor(config.angle), eor(config.speed));
-			}
-
-			Particle.prototype = new Entity();
+				this.velocity.fromDeg( eor(config.angle), eor(config.speed));
+				return this;
+			};
 
 			Particle.prototype.update = function(delta) {
 				this.timer += delta;
 
 				if(this.timer > this.lifetime ) {
-					this.parent.remove(this)
+					this.parent.remove(this);
+					this.parent.pool.push(this);
 					return;
 				}
 
@@ -87,8 +98,13 @@ define(['basic/entity', 'geo/v2', 'definition/random'],
 			};
 
 			Particle.prototype.draw = function(ctx) {
-				ctx.fillStyle = 'red';
-				ctx.fillRect(this.position.x, this.position.y, 5, 5);
+				if(this.config.sprite) {
+					var s = this.config.sprite;
+					ctx.drawImage(s, (this.position.x- s.width/2) | 0, (this.position.y- s.height/2) | 0);
+				} else {
+					ctx.fillStyle = this.config.color;
+					ctx.fillRect(this.position.x | 0, this.position.y | 0, this.config.scale, this.config.scale);
+				}
 			};
 
 			return Particles;

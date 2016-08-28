@@ -1,5 +1,10 @@
-define(['lib/scene', 'entity/back', 'basic/particles', 'geo/v2', 'definition/random', 'basic/layout', 'basic/button'],
-		function(Scene, BackButton, Particles, V2, Radnom, Layout, Button) {
+define(['lib/scene', 'entity/back', 'basic/particles', 'geo/v2', 'definition/random', 'basic/layout', 'basic/button', 'core/graphic'],
+		function(Scene, BackButton, Particles, V2, Radnom, Layout, Button, graphic) {
+			graphic.add('img/particles/ParticleFlare.png');
+			graphic.add('img/particles/ParticleCloudBlack.png');
+			graphic.add('img/particles/ParticleCloudWhite.png');
+			graphic.add('img/particles/BloodStainsSmall.png');
+
 			function ParticleScene() {
 				Scene.call(this);
 
@@ -10,6 +15,7 @@ define(['lib/scene', 'entity/back', 'basic/particles', 'geo/v2', 'definition/ran
 						{time: 4500, amount: 40}],
 					interval: 5000,
 					rate: 25,
+					scale: 6,
 					speed: Radnom.between(60,80),
 					autoplay: false,
 					loop: false
@@ -18,12 +24,13 @@ define(['lib/scene', 'entity/back', 'basic/particles', 'geo/v2', 'definition/ran
 				var p2 = new Particles(new V2(200, 400), {
 					angle: 0,
 					interval: 5000,
-					rate: 150,
-					speed: 70,
-					lifetime: Radnom.between(1000,3000),
-					offset: Radnom.vector(Radnom.between(-50, 50), 0),
+					rate: 50,
+					speed: 400,
+					lifetime: Radnom.between(1000,2000),
+					offset: Radnom.vector(Radnom.between(-100, 100), 0),
 					autoplay: false,
-					loop: false
+					loop: false,
+					sprite: graphic['img/particles/ParticleCloudBlack.png']
 				});
 
 				this.center(p1);
