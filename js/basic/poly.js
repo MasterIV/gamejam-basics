@@ -44,12 +44,14 @@ define(['basic/entity', 'geo/poly', 'config/colors', 'geo/v2', 'config/config'],
 				return this.poly.inside(this.relativeMouse());
 			};
 
-// Ensures that the entity's position is equal to the the polygon surrounding rectangle's upper left corner
-// ### Will move the entity!
+			// Ensures that the entity's position is equal to the the polygon surrounding rectangle's upper left corner
+			// ### Will move the entity!
 			PolyEntity.prototype.clearOffset = function() {
 				var offset = this.poly.getOffset();
 				this.poly.move(offset.inverse());
 				this.position.add(offset);
 			};
+
+			return PolyEntity;
 		}
 );
