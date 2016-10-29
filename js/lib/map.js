@@ -136,8 +136,11 @@ define(['basic/entity', 'core/graphic', 'geo/v2'],
 			};
 
 			TiledMap.prototype.has = function(pos, property, def) {
+				if( pos.x < 0 || pos.y < 0 || pos.x >= this.width || pos.y >= this.height )
+					return def;
+
 				var flags = this.flags(pos);
-				return flags[property] ? flags[property] : def;
+				return flags[property];
 			};
 
 			TiledMap.prototype.flags = function(pos) {
